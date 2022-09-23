@@ -1,0 +1,101 @@
+.root{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+img{
+    max-width: 100%;
+}
+.game {
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+}
+.game button{
+    margin-top: 40px;
+    width: 180px;
+    height: 50px;
+    cursor: pointer;
+    background-color: #2CAE65;
+    border-radius: 10px;
+    border: 0px solid blueviolet;
+    color: white;
+    font-size: 16px;
+}
+.root{
+    padding: 50px;
+}
+
+
+
+.letterButtons {
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: flex;
+    overflow: hidden;
+    max-width: 900px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.wordSelector{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+    max-width: 180px;
+}
+
+.wordInGame{
+    display: flex;
+    font-size: 50px;
+    justify-content: end;
+    overflow: visible;
+    margin-bottom: 60px;
+}
+.wordInGame li{
+    margin: 4px;
+}
+
+
+.letterButtons button{
+    color: #798189;
+    border: 2px solid #798189;
+    border-radius: 5px;
+    background-color: #9FAAB4;
+    width: 55px;
+    font-size: 20px;
+    height: 55px;
+    margin: 5px;
+}
+
+.chute{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chute p{
+    margin-right: 15px;
+    font-size: 17px;
+}
+
+.chute input{
+    height: 30px;
+    width: 300px;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.chute button{
+    cursor: pointer;
+    height: 40px;
+    width: 75px;
+    font-size: 17px;
+    border-radius: 5px;
+    background-color: #E1ECF3;
+    color: #3A73AA;
+    border: 2px solid #3A73AA;
+}
