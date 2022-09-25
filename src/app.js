@@ -10,16 +10,39 @@ let arrayHability = [];
 let alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 alfabeto.map(()=>{arrayHability.push('habilitado')})
 export default function App(){
+    const [word,setWord]= React.useState('')
     const [wordInGame,setWordInGame]= React.useState('')
     const [buttonCondition,setButtonCondition] = React.useState('')
     const [newGame,setNewGame] = React.useState(0)
     const [image,setImage] = React.useState("./assets/img/forca0.png")
+    const [letterButtons,setLetterButtons] = React.useState(listaLetras)
+    const [disability,setDisability] = React.useState(true)
+    const [color,setColor] = React.useState('')
+    function listaLetras(){
+        return(
+            <>
+            {alfabeto.map((f, index) => <li key={index} ><BotaoAlfabeto letra={f}/></li>)}
+            </>
+        )
+    }
     function RenderWord(props){
 
         return(
         <>
             {props.character}
         </>)
+    }
+
+    function testWin(wordArray1,wordArray2){
+        let index=0
+        while (index<wordArray1.length){
+            if(wordArray1[index]!==wordArray2[index])
+                return(0)
+            index+=1
+        }
+        console.log(wordArray1)
+        console.log(wordArray2)
+        return (1)
     }
 
     function testLetter(letter){
@@ -88,6 +111,17 @@ export default function App(){
         }else{
             setNewGame(newGame+1)
             setImage("./assets/img/forca"+(newGame+1)+".png")
+            if(newGame+1===6){
+                setDisability(true)
+                setButtonCondition('')
+                setColor('lose')
+                setWordInGame(letterList.map((f, index)=> (<li key ={index}><RenderWord character={f} index={index}/></li>)))
+            }
+        }
+        if (testWin(letterList,rightLettersList)){
+            setDisability(true)
+            setButtonCondition('')
+            setColor('win')
         }
     }
 
@@ -105,13 +139,14 @@ export default function App(){
         }
         
         return(
-            <button className={letterClicked} onClick={letterSelected}><strong>{props.letra.toUpperCase()}</strong></button>
+            <button className={letterClicked} onClick={letterSelected} disabled={disability}><strong>{props.letra.toUpperCase()}</strong></button>
         )
     }
 
 
     function wordSelector(){
         wordNow = palavras[Math.round(Math.random()*palavras.length)]
+        setWord(palavras[0])
         condicao = 'habilitado'
         letterList=wordNow.split('')
         rightLettersList=letterList.map(()=>'_')
@@ -120,6 +155,8 @@ export default function App(){
         setImage("./assets/img/forca0.png")
         alfabeto.map((f, index)=>{arrayHability[index]='habilitado'})
         setNewGame(0)
+        setDisability(false)
+        setColor('')
     }
     return(
         <div>
@@ -129,7 +166,7 @@ export default function App(){
                 </div>
                 <div className="wordSelector">
                     <button onClick={wordSelector}><strong>Escolher palavra</strong></button>
-                    <ul className={"wordInGame"}>{wordInGame}</ul>
+                    <ul className={"wordInGame "+color}>{wordInGame}</ul>
                 </div>
             </div>
             <div>
@@ -139,7 +176,7 @@ export default function App(){
             </div>
             <div className="chute">
                 <p>Ja sei a palavra!</p>
-                <input></input>
+                <input disabled={disability}></input>
                 <button><strong>Chutar</strong></button>
             </div>
         </div>
