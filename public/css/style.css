@@ -4,7 +4,7 @@
     justify-content: center;
 }
 img{
-    max-width: 100%;
+    max-width: 80%;
 }
 .game {
     display: flex;
