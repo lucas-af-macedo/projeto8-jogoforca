@@ -59,7 +59,7 @@ img{
 }
 
 
-.letterButtons button{
+button{
     color: #798189;
     border: 2px solid #798189;
     border-radius: 5px;
@@ -98,4 +98,22 @@ img{
     background-color: #E1ECF3;
     color: #3A73AA;
     border: 2px solid #3A73AA;
+}
+
+.habili .habilitado{
+    cursor: pointer;
+    width: 55px;
+    font-size: 20px;
+    height: 55px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: #E1ECF3;
+    color: #3A73AA;
+    border: 2px solid #3A73AA;
+}
+.lose{
+    color: red;
+}
+.win{
+    color: green;
 }
