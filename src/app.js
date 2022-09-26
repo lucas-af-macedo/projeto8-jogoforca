@@ -3,6 +3,8 @@ import React from 'react';
 import Chute from "./Chute";
 import Letras from "./Letras";
 import Jogo from "./Jogo";
+import styled from "styled-components";
+
 
 
 let condicao = 'desabilitado'
@@ -12,10 +14,10 @@ let rightLettersList;
 let arrayHability = [];
 let wordInput = ''
 let alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-alfabeto.map(()=>{arrayHability.push('habilitado')})
+alfabeto.map(()=>{arrayHability.push('')})
 export default function App(){
     const [wordInGame,setWordInGame]= React.useState([])
-    const [buttonCondition,setButtonCondition] = React.useState('')
+    const [buttonCondition,setButtonCondition] = React.useState(arrayHability)
     const [newGame,setNewGame] = React.useState(0)
     const [image,setImage] = React.useState("./assets/img/forca0.png")
     const [disability,setDisability] = React.useState(true)
@@ -92,12 +94,14 @@ export default function App(){
             setNewGame(6)
             setImage("./assets/img/forca6.png")
             setDisability(true)
-            setButtonCondition('')
+            arrayHability=alfabeto.map(()=>{return('')})
+            setButtonCondition(arrayHability)
             setColor('lose')
             setWordInGame([...letterList])
         }else{
             setDisability(true)
-            setButtonCondition('')
+            arrayHability=alfabeto.map(()=>{return('')})
+            setButtonCondition(arrayHability)
             setColor('win')
             setWordInGame([...letterList])
         }
@@ -177,14 +181,16 @@ export default function App(){
             setImage("./assets/img/forca"+(newGame+1)+".png")
             if(newGame+1===6){
                 setDisability(true)
-                setButtonCondition('')
+                arrayHability=alfabeto.map(()=>{return('')})
+                setButtonCondition(arrayHability)
                 setColor('lose')
                 setWordInGame([...letterList])
             }
         }
         if (testWin()){
             setDisability(true)
-            setButtonCondition('')
+            arrayHability=alfabeto.map(()=>{return('')})
+            setButtonCondition(arrayHability)
             setColor('win')
         }
     }
@@ -196,14 +202,14 @@ export default function App(){
         function letterSelected(){
             if (condicao==='habilitado'){
                 arrayHability[props.index]=''
+                setButtonCondition(arrayHability)
                 if(letterClicked!=='')
                     testLetter(props.letra)
                 setLetterClicked('')
             }
         }
-        
         return(
-            <button className={letterClicked} onClick={letterSelected} disabled={disability}><strong>{props.letra.toUpperCase()}</strong></button>
+            <button className={buttonCondition[props.index]} onClick={letterSelected} disabled={disability}><strong>{props.letra.toUpperCase()}</strong></button>
         )
     }
 
@@ -214,21 +220,29 @@ export default function App(){
         letterList=wordNow.split('')
         rightLettersList=letterList.map(()=>'_')
         setWordInGame([...rightLettersList])
-        setButtonCondition('habili')
         setImage("./assets/img/forca0.png")
-        alfabeto.map((f, index)=>{arrayHability[index]='habilitado'})
+        arrayHability=alfabeto.map(()=>{return('habilitado')})
+        setButtonCondition(arrayHability)
         setNewGame(0)
         setDisability(false)
         setColor('')
         wordInput=''
     }
     return(
-        <div>
-            <Jogo image={image} wordSelector={wordSelector} color={color} wordInGame={wordInGame} RenderWord={RenderWord}></Jogo>
-            <Letras buttonCondition={buttonCondition} alfabeto={alfabeto} BotaoAlfabeto={BotaoAlfabeto}></Letras>
-            <Chute tryWord={tryWord} setTryWord={setTryWord} disability={disability} tryWin={tryWin}></Chute>
-        </div>
+        <Raiz>
+            <div>
+                <Jogo image={image} wordSelector={wordSelector} color={color} wordInGame={wordInGame} RenderWord={RenderWord}></Jogo>
+                <Letras buttonCondition={buttonCondition} alfabeto={alfabeto} BotaoAlfabeto={BotaoAlfabeto}></Letras>
+                <Chute tryWord={tryWord} setTryWord={setTryWord} disability={disability} tryWin={tryWin}></Chute>
+            </div>
+        </Raiz>
     )
 }
 
+const Raiz = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+`
 
