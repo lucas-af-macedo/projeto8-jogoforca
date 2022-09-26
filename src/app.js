@@ -1,9 +1,12 @@
 import palavras from "./palavras"
 import React from 'react';
+import Chute from "./Chute";
+import Letras from "./Letras";
+import Jogo from "./Jogo";
+
 
 let condicao = 'desabilitado'
 let wordNow
-let underlineWordNow
 let letterList;
 let rightLettersList;
 let arrayHability = [];
@@ -11,20 +14,13 @@ let wordInput = ''
 let alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 alfabeto.map(()=>{arrayHability.push('habilitado')})
 export default function App(){
-    const [wordInGame,setWordInGame]= React.useState('')
+    const [wordInGame,setWordInGame]= React.useState([])
     const [buttonCondition,setButtonCondition] = React.useState('')
     const [newGame,setNewGame] = React.useState(0)
     const [image,setImage] = React.useState("./assets/img/forca0.png")
     const [disability,setDisability] = React.useState(true)
     const [color,setColor] = React.useState('')
     const [tryWord,setTryWord] = React.useState('')
-    function listaLetras(){
-        return(
-            <>
-            {alfabeto.map((f, index) => <li key={index} ><BotaoAlfabeto letra={f}/></li>)}
-            </>
-        )
-    }
     function RenderWord(props){
 
         return(
@@ -40,8 +36,6 @@ export default function App(){
                 return(0)
             index+=1
         }
-        console.log(letterList)
-        console.log(rightLettersList)
         return (1)
     }
 
@@ -62,35 +56,35 @@ export default function App(){
                     if(!letterList[index].match(regex))
                             win=0
                         break
-                    case 'e':
-                        regex = /^[eéèê ]+$/i
-                        if(!letterList[index].match(regex))
-                            win=0
-                        break
-                    case 'i':
-                        regex = /^[iíï ]+$/i
-                        if(!letterList[index].match(regex))
-                            win=0
-                        break
-                    case 'u':
-                        regex = /^[uú ]+$/i
-                        if(!letterList[index].match(regex))
-                            win=0
-                        break
-                    case 'o':
-                        regex = /^[oóôõö ]+$/i
-                        if(!letterList[index].match(regex))
-                            win=0
-                        break
-                    case 'c':
-                        regex = /^[cç ]+$/i
-                        if(!letterList[index].match(regex))
-                            win=0
-                        break
-                    default:
-                        if(letterList[index]!==wordInput[index])
-                            win=0
-                        break
+                case 'e':
+                    regex = /^[eéèê ]+$/i
+                    if(!letterList[index].match(regex))
+                        win=0
+                    break
+                case 'i':
+                    regex = /^[iíï ]+$/i
+                    if(!letterList[index].match(regex))
+                        win=0
+                    break
+                case 'u':
+                    regex = /^[uú ]+$/i
+                    if(!letterList[index].match(regex))
+                        win=0
+                    break
+                case 'o':
+                    regex = /^[oóôõö ]+$/i
+                    if(!letterList[index].match(regex))
+                        win=0
+                    break
+                case 'c':
+                    regex = /^[cç ]+$/i
+                    if(!letterList[index].match(regex))
+                        win=0
+                    break
+                default:
+                    if(letterList[index]!==wordInput[index])
+                        win=0
+                    break
             }
             index+=1
         }
@@ -100,14 +94,13 @@ export default function App(){
             setDisability(true)
             setButtonCondition('')
             setColor('lose')
-            setWordInGame(letterList.map((f, index)=> (<li key ={index}><RenderWord character={f} index={index}/></li>)))
+            setWordInGame([...letterList])
         }else{
             setDisability(true)
             setButtonCondition('')
             setColor('win')
-            setWordInGame(letterList.map((f, index)=> (<li key ={index}><RenderWord character={f} index={index}/></li>)))
+            setWordInGame([...letterList])
         }
-        console.log(wordInput)
         setTryWord('')
 
     }
@@ -177,7 +170,7 @@ export default function App(){
     function testLetter(letter){
         let test = testRegex(letter)
         if (test === 1){
-            setWordInGame(rightLettersList.map((f, index)=> (<li key ={index}><RenderWord character={f} index={index}/></li>)))
+            setWordInGame([...rightLettersList])
 
         }else{
             setNewGame(newGame+1)
@@ -186,7 +179,7 @@ export default function App(){
                 setDisability(true)
                 setButtonCondition('')
                 setColor('lose')
-                setWordInGame(letterList.map((f, index)=> (<li key ={index}><RenderWord character={f} index={index}/></li>)))
+                setWordInGame([...letterList])
             }
         }
         if (testWin()){
@@ -219,9 +212,8 @@ export default function App(){
         wordNow = palavras[Math.round(Math.random()*palavras.length)]
         condicao = 'habilitado'
         letterList=wordNow.split('')
-        console.log(letterList)
         rightLettersList=letterList.map(()=>'_')
-        setWordInGame(rightLettersList.map((f, index)=> (<li key ={index}><RenderWord character={f} index={index}/></li>)))
+        setWordInGame([...rightLettersList])
         setButtonCondition('habili')
         setImage("./assets/img/forca0.png")
         alfabeto.map((f, index)=>{arrayHability[index]='habilitado'})
@@ -232,25 +224,9 @@ export default function App(){
     }
     return(
         <div>
-            <div className="game">
-                <div className="hangman">
-                    <img  src={image} alt="Imagem não encontrada"/>
-                </div>
-                <div className="wordSelector">
-                    <button onClick={wordSelector}><strong>Escolher palavra</strong></button>
-                    <ul className={"wordInGame "+color}>{wordInGame}</ul>
-                </div>
-            </div>
-            <div>
-                <ul className={"letterButtons "+buttonCondition}>
-                 {alfabeto.map((f, index) => <li key={index} ><BotaoAlfabeto letra={f} index={index}/></li>)}
-                </ul>
-            </div>
-            <div className="chute">
-                <p>Ja sei a palavra!</p>
-                <input value={tryWord} onChange={e => setTryWord(e.target.value.toLowerCase())} disabled={disability}></input>
-                <button onClick={tryWin} disabled={disability}><strong>Chutar</strong></button>
-            </div>
+            <Jogo image={image} wordSelector={wordSelector} color={color} wordInGame={wordInGame} RenderWord={RenderWord}></Jogo>
+            <Letras buttonCondition={buttonCondition} alfabeto={alfabeto} BotaoAlfabeto={BotaoAlfabeto}></Letras>
+            <Chute tryWord={tryWord} setTryWord={setTryWord} disability={disability} tryWin={tryWin}></Chute>
         </div>
     )
 }
