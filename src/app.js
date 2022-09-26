@@ -238,6 +238,7 @@ export default function App(){
         setDisability(false)
         setColor('')
         wordInput=''
+        setTryWord('')
     }
     return(
         <Raiz>
