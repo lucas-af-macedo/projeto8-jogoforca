@@ -5,8 +5,8 @@ export default function Chute(props){
     return(
         <ChuteDiv className="chute">
                 <p>Ja sei a palavra!</p>
-                <input value={tryWord} onChange={e => setTryWord(e.target.value.toLowerCase())} disabled={disability}></input>
-                <button onClick={tryWin} disabled={disability}><strong>Chutar</strong></button>
+                <input data-identifier="type-guess" value={tryWord} onChange={e => setTryWord(e.target.value.toLowerCase())} disabled={disability}></input>
+                <button data-identifier="guess-button" onClick={tryWin} disabled={disability}><strong>Chutar</strong></button>
         </ChuteDiv>
     )
 }

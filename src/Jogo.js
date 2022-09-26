@@ -5,12 +5,12 @@ export default function Jogo(props){
     return(
         <JogoDiv className="game">
                 <div className="hangman">
-                    <img  src={image} alt="Imagem não encontrada"/>
+                    <img  data-identifier="game-image" src={image} alt="Imagem não encontrada"/>
                 </div>
                 <div className="wordSelector">
-                    <button onClick={wordSelector}><strong>Escolher palavra</strong></button>
-                    <ul className={"wordInGame "+color}>
-                        {wordInGame.map((f, index)=> (<li key ={index}><RenderWord character={f} index={index}/></li>))}
+                    <button data-identifier="choose-word" onClick={wordSelector}><strong>Escolher palavra</strong></button>
+                    <ul  className={"wordInGame "+color}>
+                        <li><p data-identifier="word">{wordInGame}</p></li>
                     </ul>
                 </div>
         </JogoDiv>
@@ -55,6 +55,7 @@ ul{
 }
 li{
     margin: 4px;
+    letter-spacing: .3rem;
 }
 
 .lose{

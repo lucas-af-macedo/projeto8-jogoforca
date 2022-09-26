@@ -4,7 +4,7 @@ export default function Letras(props){
     const {buttonCondition, alfabeto, BotaoAlfabeto} = props
     return(
         <div>
-                <LetrasUl className={buttonCondition}>
+                <LetrasUl >
                  {alfabeto.map((f, index) => <li key={index} ><BotaoAlfabeto letra={f} index={index}/></li>)}
                 </LetrasUl>
         </div>

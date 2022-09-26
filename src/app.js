@@ -14,6 +14,7 @@ let rightLettersList;
 let arrayHability = [];
 let wordInput = ''
 let alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+let wordToShow
 alfabeto.map(()=>{arrayHability.push('')})
 export default function App(){
     const [wordInGame,setWordInGame]= React.useState([])
@@ -97,13 +98,17 @@ export default function App(){
             arrayHability=alfabeto.map(()=>{return('')})
             setButtonCondition(arrayHability)
             setColor('lose')
-            setWordInGame([...letterList])
+            wordToShow=''
+            letterList.map((f)=>{wordToShow=wordToShow+f})
+            setWordInGame(wordToShow)
         }else{
             setDisability(true)
             arrayHability=alfabeto.map(()=>{return('')})
             setButtonCondition(arrayHability)
             setColor('win')
-            setWordInGame([...letterList])
+            wordToShow=''
+            letterList.map((f)=>{wordToShow=wordToShow+f})
+            setWordInGame(wordToShow)
         }
         setTryWord('')
 
@@ -174,7 +179,9 @@ export default function App(){
     function testLetter(letter){
         let test = testRegex(letter)
         if (test === 1){
-            setWordInGame([...rightLettersList])
+            wordToShow=''
+            rightLettersList.map((f)=>{wordToShow=wordToShow+f})
+            setWordInGame(wordToShow)
 
         }else{
             setNewGame(newGame+1)
@@ -184,7 +191,9 @@ export default function App(){
                 arrayHability=alfabeto.map(()=>{return('')})
                 setButtonCondition(arrayHability)
                 setColor('lose')
-                setWordInGame([...letterList])
+                wordToShow=''
+                letterList.map((f)=>{wordToShow=wordToShow+f})
+                setWordInGame(wordToShow)
             }
         }
         if (testWin()){
@@ -209,7 +218,7 @@ export default function App(){
             }
         }
         return(
-            <button className={buttonCondition[props.index]} onClick={letterSelected} disabled={disability}><strong>{props.letra.toUpperCase()}</strong></button>
+            <button data-identifier="letter" className={buttonCondition[props.index]} onClick={letterSelected} disabled={disability}><strong>{props.letra.toUpperCase()}</strong></button>
         )
     }
 
@@ -219,7 +228,9 @@ export default function App(){
         condicao = 'habilitado'
         letterList=wordNow.split('')
         rightLettersList=letterList.map(()=>'_')
-        setWordInGame([...rightLettersList])
+        wordToShow=''
+        rightLettersList.map((f)=>{wordToShow=wordToShow+f})
+        setWordInGame(wordToShow)
         setImage("./assets/img/forca0.png")
         arrayHability=alfabeto.map(()=>{return('habilitado')})
         setButtonCondition(arrayHability)
